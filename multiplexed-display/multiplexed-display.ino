@@ -98,11 +98,19 @@ void setup() {
   }
   Serial.println("Programming tens place");
   for (int value = 0; value <= 255; value += 1) {
-    writeEEPROM(value + 256, digits[(value / 10) % 10]);
+    if (((value / 10) % 10 == 0) && ((value / 100) % 10 == 0)) {
+       writeEEPROM(value + 256, 0);
+    } else {
+      writeEEPROM(value + 256, digits[(value / 10) % 10]);
+    }
   }
   Serial.println("Programming hundreds place");
   for (int value = 0; value <= 255; value += 1) {
-    writeEEPROM(value + 512, digits[(value / 100) % 10]);
+    if ((value / 100) % 10 == 0) {
+      writeEEPROM(value + 512, 0);
+    } else {    
+      writeEEPROM(value + 512, digits[(value / 100) % 10]);
+    }
   }
   Serial.println("Programming sign");
   for (int value = 0; value <= 255; value += 1) {
